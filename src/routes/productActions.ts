@@ -2,17 +2,16 @@ import express, { Request, Response } from 'express';
 import ProductAction from '../models/ProductAction';
 import { Op } from 'sequelize';
 
-const router = express.Router();
+const router = express.Router()
 
-// Получить историю действий с фильтрами
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const { shop_id, plu, start_date, end_date, action, page = 1, limit = 10 } = req.query;
+    const { shop_id, plu, start_date, end_date, action, page = 1, limit = 10 } = req.query
 
-    const filters: any = {};
+    const filters: any = {}
 
-    if (shop_id) filters.shop_id = shop_id;
-    if (plu) filters.product_id = plu; // Assuming 'plu' is actually a product_id for simplicity
+    if (shop_id) filters.shop_id = shop_id
+    if (plu) filters.product_id = plu
     if (start_date || end_date) {
       filters.timestamp = {
         [Op.between]: [
@@ -41,7 +40,6 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-// Создать новое событие
 router.post('/', async (req: Request, res: Response) => {
   try {
     const { action, product_id, shop_id, quantity_change } = req.body;
